@@ -1,9 +1,11 @@
 const subscribeSocketEvents = require('./socket-events');
+const clients = [];
 
 
 module.exports = (wss) => {
   wss.on('connection', (ws, req) => {
-    console.log('connected');
+    clients.push(clients.length)        
+    console.log('connected, ' + clients.length);
     subscribeSocketEvents(ws);
   });
 
