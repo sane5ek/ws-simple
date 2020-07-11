@@ -5,13 +5,13 @@ const clients = {};
 
 module.exports = (wss) => {
   wss.on('connection', (ws, req) => {
-    console.log('connected, ', wss.clients.size, ' , ticket: ', req.info.ticket);
-    const oldClient = clients[req.info.ticket];
+    console.log('connected, ', wss.clients.size, ' , ticket: ', req.ticket);
+    const oldClient = clients[req.ticket];
     if (oldClient) {
-      ws.send('Disconnected because new client with that ticket is arrived');
-      oldClient.disconnect();
+      oldClient.send('Closed because new client with that ticket is arrived');
+      oldClient.close();
     }
-    clients[req.info.ticket] = ws;
+    clients[req.ticket] = ws;
     subscribeSocketEvents(ws);
   });
 
