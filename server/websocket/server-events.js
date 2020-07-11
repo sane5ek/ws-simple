@@ -12,7 +12,8 @@ module.exports = (wss) => {
     }
     clients[req.ticket] = ws;
     subscribeSocketEvents(ws);
-    console.log('connected, ', wss.clients.size, ' , ticket: ', req.ticket);
+    console.log('connected, ', wss.clients.size, ', ticket: ', req.ticket);
+    ws.send(`Client #${wss.clients.size} with ticket #${req.ticket}`);
   });
 
   wss.on('close', () => {
