@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+
+
 // const app = require('./../app');
 const createWebSocketServer = require('./websocket');
 const http = require('http');
