@@ -1,10 +1,17 @@
 const subscribeSocketEvents = require('./socket-events');
-const clients = [];
 
+
+const clients = {};
 
 module.exports = (wss) => {
   wss.on('connection', (ws, req) => {
-    console.log('connected, ' + wss.clients.size);
+    console.log('connected, ', wss.clients.size, ' , ticket: ', req.info.ticket);
+    const oldClient = clients[req.info.ticket];
+    if (oldClient) {
+      ws.send('Disconnected because new client with that ticket is arrived');
+      oldClient.disconnect();
+    }
+    clients[req.info.ticket] = ws;
     subscribeSocketEvents(ws);
   });
 
