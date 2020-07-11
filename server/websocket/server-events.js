@@ -4,8 +4,7 @@ const clients = [];
 
 module.exports = (wss) => {
   wss.on('connection', (ws, req) => {
-    clients.push(clients.length)        
-    console.log('connected, ' + clients.length);
+    console.log('connected, ' + wss.clients.size);
     subscribeSocketEvents(ws);
   });
 
